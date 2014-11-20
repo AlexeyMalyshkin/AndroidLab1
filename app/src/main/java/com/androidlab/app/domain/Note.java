@@ -1,16 +1,60 @@
 package com.androidlab.app.domain;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import com.androidlab.app.constant.Priority;
 
 import java.util.Date;
 
-public class Note {
+public class Note implements Parcelable{
     private int id;
     private String title;
     private String description;
     private Priority priority;
     private Date dateTime;
     private String imageId;
+
+
+    public Note(Parcel parcel){
+        id = parcel.readInt();
+        title = parcel.readString();
+        description = parcel.readString();
+        imageId = parcel.readString();
+
+        dateTime = new Date(parcel.readLong());
+        priority = Priority.valueOf(parcel.readString());
+    }
+
+    public Note(){}
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(title);
+        parcel.writeString(description);
+        parcel.writeString(imageId);
+
+        parcel.writeLong(dateTime.getTime());
+        parcel.writeString(priority.name());
+    }
+
+    public static final Parcelable.Creator<Note> CREATOR = new Parcelable.Creator<Note>() {
+
+        @Override
+        public Note createFromParcel(Parcel parcel) {
+            return new Note(parcel);
+        }
+
+        @Override
+        public Note[] newArray(int size) {
+            return new Note[size];
+        }
+    };
 
     public int getId() {
         return id;

@@ -11,7 +11,7 @@ import com.androidlab.app.adapter.NoteAdapter;
 import com.androidlab.app.constant.Priority;
 import com.androidlab.app.domain.Note;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +26,15 @@ public class NotesActivity extends Activity {
 
         notesListView = (ListView) findViewById(R.id.notesListView);
 
-        NoteAdapter adapter = new NoteAdapter(populateList(), this, R.layout.note_layout);
+
+        Note note = getIntent().getParcelableExtra("note");
+        List<Note> noteList = populateList();
+
+        if (note != null) {
+            noteList.add(note);
+        }
+
+        NoteAdapter adapter = new NoteAdapter(noteList, this, R.layout.note_layout);
         notesListView.setAdapter(adapter);
     }
 
@@ -38,7 +46,7 @@ public class NotesActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.action_add){
+        if (item.getItemId() == R.id.action_add) {
             Intent intent = new Intent(getApplicationContext(), AddNoteActivity.class);
 
             startActivity(intent);
@@ -48,16 +56,19 @@ public class NotesActivity extends Activity {
     }
 
     private List<Note> populateList() {
-        return Arrays.asList(new Note() {{
-            setTitle("1title");
-            setDateTime(new Date(0));
-            setPriority(Priority.HIGH);
-            setImageId("priority_high");
-        }}, new Note() {{
-            setTitle("2title");
-            setDateTime(new Date(0));
-            setPriority(Priority.LOW);
-            setImageId("priority_low");
-        }});
+        return new ArrayList<Note>() {{
+            add(new Note() {{
+                setTitle("1title");
+                setDateTime(new Date(0));
+                setPriority(Priority.HIGH);
+                setImageId("priority_high");
+            }});
+            add(new Note() {{
+                setTitle("2title");
+                setDateTime(new Date(0));
+                setPriority(Priority.HIGH);
+                setImageId("priority_high");
+            }});
+        }};
     }
 }

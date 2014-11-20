@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AndroidLab</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_back">Back</string>
+    <string name="colors_button">colors</string>
+    <string name="calc_button">calculator</string>
+    <string name="notes_button">notes</string>
+    <string name="number0">0</string>
+    <string name="add_note_back_button">Back</string>
+    <string name="action_add">Add</string>
+
+</resources>

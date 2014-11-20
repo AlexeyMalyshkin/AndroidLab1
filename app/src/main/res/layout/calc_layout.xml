@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout tools:context=".CalcActivity" xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+              android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              android:paddingTop="@dimen/activity_vertical_margin"
+              android:paddingBottom="@dimen/activity_vertical_margin" android:orientation="vertical"
+              android:weightSum="6" android:id="@+id/linearLayout">
+    <TextView android:id="@+id/calcResultTextView" android:text="0" android:layout_width="match_parent"
+              android:layout_height="wrap_content" android:textSize="30dp"
+              android:layout_weight="1"/>
+    <LinearLayout android:id="@+id/calcLine1" android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:layout_below="@+id/calcResultTextView" android:layout_centerHorizontal="true"
+                  android:orientation="horizontal" android:layout_weight="1" android:weightSum="4">
+        <Button android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="7"
+                android:id="@+id/number7Button" android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" android:layout_weight="1" android:onClick="onNumberClick"/>
+        <Button android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="8"
+                android:id="@+id/number8Button" android:layout_toEndOf="@+id/add_note_back_button"
+                android:layout_toRightOf="@+id/add_note_back_button" android:layout_weight="1" android:onClick="onNumberClick"/>
+        <Button android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="9"
+                android:id="@+id/number9Button" android:layout_toEndOf="@+id/button2"
+                android:layout_toRightOf="@+id/button2" android:layout_weight="1" android:onClick="onNumberClick"/>
+        <Button android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="/"
+                android:id="@+id/operationDivisionButton" android:layout_toEndOf="@+id/button3"
+                android:layout_below="@+id/calcResultTextView" android:layout_toRightOf="@+id/button3"
+                android:layout_weight="1" android:onClick="onOperationClick"/>
+    </LinearLayout>
+    <LinearLayout android:id="@+id/calcLine2" android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:layout_below="@+id/calcLine1" android:layout_centerHorizontal="true"
+                  android:orientation="horizontal" android:layout_weight="1" android:weightSum="4">
+        <Button android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="4"
+                android:id="@+id/number4Button" android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" android:layout_weight="1" android:onClick="onNumberClick"/>
+        <Button android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="5"
+                android:id="@+id/number5Button" android:layout_weight="1" android:onClick="onNumberClick"/>
+        <Button android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="6"
+                android:id="@+id/number6Button" android:layout_weight="1" android:onClick="onNumberClick"/>
+        <Button android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="*"
+                android:id="@+id/operationMulButton" android:layout_weight="1" android:onClick="onOperationClick"/>
+    </LinearLayout>
+    <LinearLayout android:id="@+id/calcLine3" android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:layout_below="@+id/calcLine2" android:layout_centerHorizontal="true"
+                  android:orientation="horizontal" android:layout_weight="1" android:weightSum="4">
+        <Button android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="1"
+                android:id="@+id/number1Button" android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" android:layout_weight="1" android:onClick="onNumberClick"/>
+        <Button android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="2"
+                android:id="@+id/number2Button" android:layout_weight="1" android:onClick="onNumberClick"/>
+        <Button android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="3"
+                android:id="@+id/number3Button" android:layout_weight="1" android:onClick="onNumberClick"/>
+        <Button android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="-"
+                android:id="@+id/operationMinusButton" android:layout_weight="1" android:onClick="onOperationClick"/>
+    </LinearLayout>
+    <LinearLayout android:id="@+id/calcLine4" android:layout_width="fill_parent" android:layout_height="wrap_content"
+                  android:layout_below="@+id/calcLine3" android:layout_centerHorizontal="true"
+                  android:orientation="horizontal" android:layout_weight="1" android:weightSum="4">
+        <Button android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="CLR"
+                android:id="@+id/operationClrButton" android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" android:layout_weight="1" android:onClick="onClrClick"/>
+        <Button android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="@string/number0"
+                android:id="@+id/number0Button" android:layout_weight="1" android:onClick="onNumberClick"/>
+        <Button android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="="
+                android:id="@+id/operationResultButton" android:layout_weight="1" android:onClick="onResultClick"/>
+        <Button android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="+"
+                android:id="@+id/operationPlusButton" android:layout_weight="1" android:onClick="onOperationClick"/>
+    </LinearLayout>
+</LinearLayout>

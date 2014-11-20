@@ -3,6 +3,7 @@ package com.androidlab.app.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,10 +68,9 @@ public class NoteAdapter extends ArrayAdapter<Note> {
         priorityImage.setImageResource(resources.getIdentifier(priorityImageName, "drawable", (context).getPackageName()));
 
         ImageView galeryImage = (ImageView) view.findViewById(R.id.galeryImage);
-//        String priorityImageName = priorityImageName(list.get(position));
-//        Resources resources = context.getResources();
-        galeryImage.setImageResource(resources.getIdentifier(note.getImageId(), "drawable", (context).getPackageName()));
-
+        if(note.getImageId()!=null) {
+            galeryImage.setImageURI(Uri.parse(note.getImageId()));
+        }
 
 
         return view;

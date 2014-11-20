@@ -10,6 +10,7 @@
     <string name="number0">0</string>
     <string name="add_note_back_button">Back</string>
     <string name="action_add">Add</string>
+    <string name="add_note_button_text">Add</string>
 
     <string name="no_data">No data</string>
 

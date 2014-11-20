@@ -2,6 +2,7 @@ package com.androidlab.app.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,12 +11,14 @@ import android.os.Bundle;
 import android.os.Debug;
 import android.text.TextUtils;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
@@ -96,7 +99,39 @@ public class NotesActivity extends Activity  implements AdapterView.OnItemClickL
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+
         getMenuInflater().inflate(R.menu.note, menu);
+
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView =
+                (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
+
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                Note note = getIntent().getParcelableExtra("note");
+                List<Note> noteList = populateList();
+                if (note != null) {
+                    noteList.add(note);
+                }
+
+                NoteAdapter adapter = new NoteAdapter(noteList, this, R.layout.note_layout);
+                notesListView.setAdapter(adapter);
+                notesListView.setOnItemClickListener(this);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
         return true;
     }
 
@@ -170,12 +205,14 @@ public class NotesActivity extends Activity  implements AdapterView.OnItemClickL
     private List<Note> populateList() {
         return new ArrayList<Note>() {{
             add(new Note() {{
+                setId(13);
                 setTitle("1title");
                 setDateTime(new Date(0));
                 setPriority(Priority.HIGH);
                 setImageId("priority_high");
             }});
             add(new Note() {{
+                setId(25);
                 setTitle("2title");
                 setDateTime(new Date(0));
                 setPriority(Priority.HIGH);

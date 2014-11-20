@@ -12,6 +12,7 @@
     <string name="action_add">Add</string>
     <string name="add_note_button_text">Add</string>
 
+    <string name="options_menu">options_menu</string>
     <string name="no_data">No data</string>
 
     <string name="manage">Manage</string>

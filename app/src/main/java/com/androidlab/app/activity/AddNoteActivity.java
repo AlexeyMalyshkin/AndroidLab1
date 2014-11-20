@@ -82,10 +82,13 @@ public class AddNoteActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Uri imageUri = data.getData();
-        imageView.setImageURI(imageUri);
-        imageView.setTag(imageUri.toString());
-
+        if(data!=null) {
+            Uri imageUri = data.getData();
+            if (imageUri != null) {
+                imageView.setImageURI(imageUri);
+                imageView.setTag(imageUri.toString());
+            }
+        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 

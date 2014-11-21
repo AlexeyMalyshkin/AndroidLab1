@@ -41,10 +41,12 @@ public class AddNoteActivity extends Activity {
         Spinner spinner = (Spinner) findViewById(R.id.prioritySpinner);
         spinner.setAdapter(adapter);
 
+        imageView = (ImageView) findViewById(R.id.imageView);
+
         // ON EDIT:
 
         Note editNote = getIntent().getParcelableExtra("note");
-        if(editNote!=null){/*
+        if(editNote!=null){
             note = editNote;
 
             EditText titleEditText = (EditText) findViewById(R.id.titleAddNote);
@@ -53,17 +55,17 @@ public class AddNoteActivity extends Activity {
             EditText descriptionEditText = (EditText) findViewById(R.id.descriptionAddNote);
             descriptionEditText.setText(note.getDescription());
 
-            imageView.setImageURI(Uri.parse(note.getImageId()));
+            if(note.getImageId()!=null) {
+                if(!note.getImageId().isEmpty()) {
+                    imageView.setImageURI(Uri.parse(note.getImageId()));
+                }
+            }
 
             spinner.setSelection(1,true);
 
             CalendarView calendarView = (CalendarView) findViewById(R.id.calendarAddNote);
             calendarView.setDate(note.getDateTime().getTime());
-        */}
-
-        imageView = (ImageView) findViewById(R.id.imageView);
-
-
+        }
     }
 
     public void imageClick(View view){

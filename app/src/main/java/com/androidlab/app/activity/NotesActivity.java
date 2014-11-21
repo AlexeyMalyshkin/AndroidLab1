@@ -6,16 +6,14 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Debug;
-import android.text.TextUtils;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -36,6 +34,7 @@ import java.util.List;
 public class NotesActivity extends Activity  implements AdapterView.OnItemClickListener  {
 
     private ListView notesListView;
+    private List<Note> noteList;
 
     private AlertDialog newBtnDialog;
     @Override
@@ -47,7 +46,7 @@ public class NotesActivity extends Activity  implements AdapterView.OnItemClickL
 
 
         Note note = getIntent().getParcelableExtra("note");
-        List<Note> noteList = populateList();
+        noteList = populateList();
 
         if (note != null) {
             noteList.add(note);
@@ -71,6 +70,8 @@ public class NotesActivity extends Activity  implements AdapterView.OnItemClickL
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
       // if (v.getId() == R.id.notes_button) {
+
+//        selectedId = menuInfo.
             getMenuInflater().inflate(R.menu.contextmenu_browse, menu);
             menu.setHeaderTitle("Choose an Option");
           //  menu.setHeaderIcon(R.drawable.ic_dialog_menu_generic);
@@ -80,23 +81,41 @@ public class NotesActivity extends Activity  implements AdapterView.OnItemClickL
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int id = (int) info.id;
 
         switch (item.getItemId()) {
             case R.id.menu_edit:
-                openNote(info.id, this);
+                Note note = new Note();
+                for(int i=0; i<noteList.size(); i++){
+                    if(noteList.get(i).getId() == id){
+                        note = noteList.get(i);
+
+                        Intent intent = new Intent(getApplicationContext(), AddNoteActivity.class);
+                        intent.putExtra("note", note);
+
+                        startActivity(intent);
+//                        break;
+                    }
+                }
+
                 break;
 
             case R.id.menu_delete:
-              //  Note note = new Note(info.id);
-               // note.delete(SmartPad.db);
+                for(int i=0; i<noteList.size(); i++){
+                    if(noteList.get(i).getId() == id){
+                        noteList.remove(i);
+                        break;
+                    }
+                }
 
-             //   SimpleCursorAdapter adapter = (SimpleCursorAdapter) noteList.getAdapter();
-              //  adapter.getCursor().requery();
-              //  adapter.notifyDataSetChanged();
+                NoteAdapter adapter = new NoteAdapter(noteList, this, R.layout.note_layout);
+                notesListView.setAdapter(adapter);
+
                 break;
         }
         return true;
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -210,6 +229,7 @@ public class NotesActivity extends Activity  implements AdapterView.OnItemClickL
                 setDateTime(new Date(0));
                 setPriority(Priority.HIGH);
                 setImageId("priority_high");
+                setId(54);
             }});
             add(new Note() {{
                 setId(25);
@@ -217,6 +237,7 @@ public class NotesActivity extends Activity  implements AdapterView.OnItemClickL
                 setDateTime(new Date(0));
                 setPriority(Priority.HIGH);
                 setImageId("priority_high");
+                setId(12);
             }});
         }};
     }

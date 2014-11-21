@@ -33,8 +33,6 @@ public class AddNoteActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_note_layout);
-
-
         String[] data = {"low", "middle", "high"};
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
@@ -42,6 +40,26 @@ public class AddNoteActivity extends Activity {
 
         Spinner spinner = (Spinner) findViewById(R.id.prioritySpinner);
         spinner.setAdapter(adapter);
+
+        // ON EDIT:
+
+        Note editNote = getIntent().getParcelableExtra("note");
+        if(editNote!=null){/*
+            note = editNote;
+
+            EditText titleEditText = (EditText) findViewById(R.id.titleAddNote);
+            titleEditText.setText(note.getTitle());
+
+            EditText descriptionEditText = (EditText) findViewById(R.id.descriptionAddNote);
+            descriptionEditText.setText(note.getDescription());
+
+            imageView.setImageURI(Uri.parse(note.getImageId()));
+
+            spinner.setSelection(1,true);
+
+            CalendarView calendarView = (CalendarView) findViewById(R.id.calendarAddNote);
+            calendarView.setDate(note.getDateTime().getTime());
+        */}
 
         imageView = (ImageView) findViewById(R.id.imageView);
 

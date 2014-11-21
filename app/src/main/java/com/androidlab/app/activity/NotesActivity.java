@@ -45,6 +45,7 @@ public class NotesActivity extends Activity implements AdapterView.OnItemClickLi
 
         notesListView = (ListView) findViewById(R.id.notesListView);
 
+         noteList = populateList();
 
         Note note = getIntent().getParcelableExtra("note");
 
@@ -213,8 +214,7 @@ repopulateList(lastSearchQuery,data[arg2]);
     }
 
     private void repopulateList(String s,String f) {
-
-        List<Note> noteList1 = noteList;
+        List<Note> noteList1 = populateList();
         List<Note> noteListResult = new ArrayList<Note>();
         for(int i=0; i<noteList1.size(); i++){
             if(noteList1.get(i).getTitle().contains(s)){
@@ -242,12 +242,13 @@ repopulateList(lastSearchQuery,data[arg2]);
             }
         }
 
-        setNoteAdapter(noteListResult);
+        noteList = noteListResult;
+        setNoteAdapter();
     }
 
-    private void setNoteAdapter(List<Note> list)
+    private void setNoteAdapter()
     {
-        NoteAdapter adapter = new NoteAdapter(list,this , R.layout.note_layout);
+        NoteAdapter adapter = new NoteAdapter(noteList,this , R.layout.note_layout);
         notesListView.setAdapter(adapter);
         notesListView.setOnItemClickListener(this);
     }

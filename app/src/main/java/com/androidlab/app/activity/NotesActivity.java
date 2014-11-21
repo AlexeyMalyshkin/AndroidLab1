@@ -14,10 +14,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import android.view.ContextMenu;
@@ -35,7 +37,6 @@ public class NotesActivity extends Activity  implements AdapterView.OnItemClickL
 
     private ListView notesListView;
     private List<Note> noteList;
-
     private AlertDialog newBtnDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +45,8 @@ public class NotesActivity extends Activity  implements AdapterView.OnItemClickL
 
         notesListView = (ListView) findViewById(R.id.notesListView);
 
+         noteList = populateList();
 
-        Note note = getIntent().getParcelableExtra("note");
-        noteList = populateList();
-
-        if (note != null) {
-            noteList.add(note);
-        }
 
         NoteAdapter adapter = new NoteAdapter(noteList, this, R.layout.note_layout);
         notesListView.setAdapter(adapter);
@@ -115,7 +111,11 @@ public class NotesActivity extends Activity  implements AdapterView.OnItemClickL
         }
         return true;
     }
+    private String  lastSearchQuery="";
+    private String  lastFilterQuery="";
+    private MenuItem mSpinnerItem1 = null;
 
+    private  String[] data = {"All","low", "middle", "high"};
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -130,30 +130,106 @@ public class NotesActivity extends Activity  implements AdapterView.OnItemClickL
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
 
+        mSpinnerItem1 = menu.findItem( R.id.menu_spinner1);
+        View view1 = mSpinnerItem1.getActionView();
+        if (view1 instanceof Spinner)
+        {
+            final Spinner spinner = (Spinner) view1;
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
+            spinner.setAdapter(adapter);
+
+
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                @Override
+                public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                           int arg2, long arg3) {
+                    lastFilterQuery = data[arg2];
+repopulateList(lastSearchQuery,data[arg2]);
+                  //  showDialog(arg2, arg3);
+                    // TODO Auto-generated method stub
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> arg0) {
+                    // TODO Auto-generated method stub
+
+                }
+            });
+
+        }
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Note note = getIntent().getParcelableExtra("note");
-                List<Note> noteList = populateList();
-                if (note != null) {
-                    noteList.add(note);
-                }
+                lastSearchQuery=s;
+                repopulateList(s,lastFilterQuery);
+              //  notesListView.setAdapter(adapter);
 
-                NoteAdapter adapter = new NoteAdapter(noteList, this, R.layout.note_layout);
-                notesListView.setAdapter(adapter);
-                notesListView.setOnItemClickListener(this);
-                return false;
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-                return false;
+                lastSearchQuery=s;
+
+                repopulateList(s,lastFilterQuery);
+                return true;
             }
         });
         return true;
     }
 
+    private void showDialog(int arg2, long arg3) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle(arg2  +" ar" + arg3);
+        builder.setItems(R.array.new_note_arr, dialogListener);
+        AlertDialog newBtnDialog1 = builder.create();
+        newBtnDialog1.show();
+    }
+
+    private void repopulateList(String s,String f) {
+        List<Note> noteList1 = populateList();
+        List<Note> noteListResult = new ArrayList<Note>();
+        for(int i=0; i<noteList1.size(); i++){
+            if(noteList1.get(i).getTitle().contains(s)){
+                switch (f)
+                {
+                    case "low":
+                    {
+                        if(noteList1.get(i).getPriority() != Priority.LOW )
+                            continue;
+
+                    }
+                    case "middle":
+                    {
+                        if(noteList1.get(i).getPriority() != Priority.MIDDLE )
+                            continue;
+                    }
+                    case "high":
+                    {
+                        if(noteList1.get(i).getPriority() != Priority.HIGH )
+                            continue;
+                    }
+                }
+                noteListResult.add(noteList1.get(i));
+
+            }
+        }
+
+        noteList = noteListResult;
+        setNoteAdapter();
+    }
+
+    private void setNoteAdapter()
+    {
+        NoteAdapter adapter = new NoteAdapter(noteList,this , R.layout.note_layout);
+        notesListView.setAdapter(adapter);
+        notesListView.setOnItemClickListener(this);
+    }
     private DialogInterface.OnClickListener dialogListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
@@ -222,7 +298,7 @@ public class NotesActivity extends Activity  implements AdapterView.OnItemClickL
     }
 
     private List<Note> populateList() {
-        return new ArrayList<Note>() {{
+        ArrayList<Note> nottes=    new ArrayList<Note>() {{
             add(new Note() {{
                 setId(13);
                 setTitle("1title");
@@ -239,6 +315,20 @@ public class NotesActivity extends Activity  implements AdapterView.OnItemClickL
                 setImageId("priority_high");
                 setId(12);
             }});
+            add(new Note() {{
+                setId(25);
+                setTitle("3title");
+                setDateTime(new Date(0));
+                setPriority(Priority.HIGH);
+                setImageId("priority_high");
+                setId(12);
+            }});
         }};
+        Note note = getIntent().getParcelableExtra("note");
+
+        if (note != null) {
+            nottes.add(note);
+        }
+        return nottes;
     }
 }

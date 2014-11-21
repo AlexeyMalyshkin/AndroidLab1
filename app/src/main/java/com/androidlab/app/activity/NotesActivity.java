@@ -18,12 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
-
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import com.androidlab.app.R;
 import com.androidlab.app.adapter.NoteAdapter;
 import com.androidlab.app.constant.Priority;
@@ -33,11 +28,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class NotesActivity extends Activity  implements AdapterView.OnItemClickListener  {
+public class NotesActivity extends Activity implements AdapterView.OnItemClickListener {
 
     private ListView notesListView;
-    private List<Note> noteList;
+    private static List<Note> noteList;
+
+    private static boolean firstRun = true;
+    private static boolean editMode = false;
+
     private AlertDialog newBtnDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +47,23 @@ public class NotesActivity extends Activity  implements AdapterView.OnItemClickL
 
          noteList = populateList();
 
+        Note note = getIntent().getParcelableExtra("note");
+
+        if(firstRun) {
+            noteList = populateList();
+            firstRun = false;
+        }
+
+        if (note != null) {
+            if (editMode) {
+                for (int i = 0; i < noteList.size(); i++) {
+                    if (noteList.get(i).getId() == note.getId()) {
+                        noteList.remove(i);
+                    }
+                }
+            }
+            noteList.add(note);
+        }
 
         NoteAdapter adapter = new NoteAdapter(noteList, this, R.layout.note_layout);
         notesListView.setAdapter(adapter);
@@ -63,15 +80,16 @@ public class NotesActivity extends Activity  implements AdapterView.OnItemClickL
         builder.setTitle("Sort by");
         builder.setItems(R.array.sort_options_arr, dialogListener);
     }
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-      // if (v.getId() == R.id.notes_button) {
+        // if (v.getId() == R.id.notes_button) {
 
 //        selectedId = menuInfo.
-            getMenuInflater().inflate(R.menu.contextmenu_browse, menu);
-            menu.setHeaderTitle("Choose an Option");
-          //  menu.setHeaderIcon(R.drawable.ic_dialog_menu_generic);
-       // }
+        getMenuInflater().inflate(R.menu.contextmenu_browse, menu);
+        menu.setHeaderTitle("Choose an Option");
+        //  menu.setHeaderIcon(R.drawable.ic_dialog_menu_generic);
+        // }
     }
 
     @Override
@@ -81,9 +99,10 @@ public class NotesActivity extends Activity  implements AdapterView.OnItemClickL
 
         switch (item.getItemId()) {
             case R.id.menu_edit:
+                editMode = true;
                 Note note = new Note();
-                for(int i=0; i<noteList.size(); i++){
-                    if(noteList.get(i).getId() == id){
+                for (int i = 0; i < noteList.size(); i++) {
+                    if (noteList.get(i).getId() == id) {
                         note = noteList.get(i);
 
                         Intent intent = new Intent(getApplicationContext(), AddNoteActivity.class);
@@ -97,8 +116,8 @@ public class NotesActivity extends Activity  implements AdapterView.OnItemClickL
                 break;
 
             case R.id.menu_delete:
-                for(int i=0; i<noteList.size(); i++){
-                    if(noteList.get(i).getId() == id){
+                for (int i = 0; i < noteList.size(); i++) {
+                    if (noteList.get(i).getId() == id) {
                         noteList.remove(i);
                         break;
                     }
@@ -168,6 +187,9 @@ repopulateList(lastSearchQuery,data[arg2]);
                 repopulateList(s,lastFilterQuery);
               //  notesListView.setAdapter(adapter);
 
+//                NoteAdapter adapter = new NoteAdapter(noteList, this, R.layout.note_layout);
+//                notesListView.setAdapter(adapter);
+//                notesListView.setOnItemClickListener(this);
                 return true;
             }
 
@@ -235,22 +257,22 @@ repopulateList(lastSearchQuery,data[arg2]);
         public void onClick(DialogInterface dialog, int which) {
 
             System.out.println("qweeqwe");
-                Intent intent = new Intent();
-                switch (which) {
-                    case 0:
+            Intent intent = new Intent();
+            switch (which) {
+                case 0:
 
 
-                      //  intent.setClass(BrowseActivity.this, BasicActivity.class);
-                        break;
-                    case 1:
-                      //  intent.setClass(BrowseActivity.this, ChecklistActivity.class);
-                        break;
-                    case 2:
+                    //  intent.setClass(BrowseActivity.this, BasicActivity.class);
+                    break;
+                case 1:
+                    //  intent.setClass(BrowseActivity.this, ChecklistActivity.class);
+                    break;
+                case 2:
 
-                      //  intent.setClass(BrowseActivity.this, SnapshotActivity.class);
-                        break;
-                }
-                startActivity(intent);
+                    //  intent.setClass(BrowseActivity.this, SnapshotActivity.class);
+                    break;
+            }
+            startActivity(intent);
 
 
         }
@@ -265,6 +287,7 @@ repopulateList(lastSearchQuery,data[arg2]);
     static void openNote(long id, Context ctx) {
 
     }
+
     public void onClick(View v) {
         newBtnDialog.show();
         LinearLayout checkitemLL;
@@ -286,6 +309,7 @@ repopulateList(lastSearchQuery,data[arg2]);
 //                break;
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_add) {
@@ -304,7 +328,7 @@ repopulateList(lastSearchQuery,data[arg2]);
                 setTitle("1title");
                 setDateTime(new Date(0));
                 setPriority(Priority.HIGH);
-                setImageId("priority_high");
+//                setImageId();
                 setId(54);
             }});
             add(new Note() {{
@@ -312,7 +336,7 @@ repopulateList(lastSearchQuery,data[arg2]);
                 setTitle("2title");
                 setDateTime(new Date(0));
                 setPriority(Priority.HIGH);
-                setImageId("priority_high");
+//                setImageId("priority_high");
                 setId(12);
             }});
             add(new Note() {{

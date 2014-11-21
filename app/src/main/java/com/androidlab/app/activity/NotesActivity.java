@@ -134,26 +134,40 @@ public class NotesActivity extends Activity  implements AdapterView.OnItemClickL
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Note note = getIntent().getParcelableExtra("note");
-                List<Note> noteList = populateList();
-                if (note != null) {
-                    noteList.add(note);
-                }
+                repopulateList(s);
+              //  notesListView.setAdapter(adapter);
 
-                NoteAdapter adapter = new NoteAdapter(noteList, this, R.layout.note_layout);
-                notesListView.setAdapter(adapter);
-                notesListView.setOnItemClickListener(this);
-                return false;
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-                return false;
+                repopulateList(s);
+                return true;
             }
         });
         return true;
     }
 
+    private void repopulateList(String s) {
+        List<Note> noteList1 = populateList();
+        List<Note> noteListResult = new ArrayList<Note>();
+        for(int i=0; i<noteList1.size(); i++){
+            if(noteList1.get(i).getTitle().contains( s)){
+                noteListResult.add(noteList1.get(i));
+            }
+        }
+
+        noteList = noteListResult;
+        setNoteAdapter();
+    }
+
+    private void setNoteAdapter()
+    {
+        NoteAdapter adapter = new NoteAdapter(noteList,this , R.layout.note_layout);
+        notesListView.setAdapter(adapter);
+        notesListView.setOnItemClickListener(this);
+    }
     private DialogInterface.OnClickListener dialogListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
@@ -234,6 +248,14 @@ public class NotesActivity extends Activity  implements AdapterView.OnItemClickL
             add(new Note() {{
                 setId(25);
                 setTitle("2title");
+                setDateTime(new Date(0));
+                setPriority(Priority.HIGH);
+                setImageId("priority_high");
+                setId(12);
+            }});
+            add(new Note() {{
+                setId(25);
+                setTitle("3title");
                 setDateTime(new Date(0));
                 setPriority(Priority.HIGH);
                 setImageId("priority_high");

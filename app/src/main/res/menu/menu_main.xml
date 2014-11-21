@@ -5,4 +5,12 @@
         android:title="@string/action_back"
         android:orderInCategory="100"
         android:showAsAction="never" />
+    <item
+        android:id="@+id/menu_spinner1"
+
+
+        android:title="@string/hello_world"
+        android:showAsAction="always"
+        android:orderInCategory="1"
+        android:actionViewClass="android.widget.Spinner" />
 </menu>

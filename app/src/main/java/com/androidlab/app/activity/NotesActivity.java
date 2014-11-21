@@ -45,8 +45,6 @@ public class NotesActivity extends Activity implements AdapterView.OnItemClickLi
 
         notesListView = (ListView) findViewById(R.id.notesListView);
 
-         noteList = populateList();
-
         Note note = getIntent().getParcelableExtra("note");
 
         if(firstRun) {

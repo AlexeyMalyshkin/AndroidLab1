@@ -53,10 +53,10 @@
     </style>
 
     <style name="FontStyle.Large">
-        <item name="font_small">44sp</item>
-        <item name="font_medium">54sp</item>
-        <item name="font_large">56sp</item>
-        <item name="font_xlarge">57sp</item>
+        <item name="font_small">26sp</item>
+        <item name="font_medium">28sp</item>
+        <item name="font_large">30sp</item>
+        <item name="font_xlarge">32sp</item>
     </style>
     <!-- Custom Style defined for the buttons. -->
     <style name="CustomButtonStyle">

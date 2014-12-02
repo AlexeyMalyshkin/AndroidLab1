@@ -69,6 +69,7 @@ public class NoteAdapter extends ArrayAdapter<Note> {
 
         ImageView galeryImage = (ImageView) view.findViewById(R.id.galeryImage);
         if(note.getImageId()!=null) {
+//            galeryImage.setTag(note.getId());
             galeryImage.setImageURI(Uri.parse(note.getImageId()));
         }
 

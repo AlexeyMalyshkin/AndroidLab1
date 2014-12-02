@@ -327,7 +327,6 @@ repopulateList(lastSearchQuery,data[arg2]);
                 setDateTime(new Date(0));
                 setPriority(Priority.HIGH);
 //                setImageId();
-                setId(54);
             }});
             add(new Note() {{
                 setId(25);
@@ -335,15 +334,13 @@ repopulateList(lastSearchQuery,data[arg2]);
                 setDateTime(new Date(0));
                 setPriority(Priority.HIGH);
 //                setImageId("priority_high");
-                setId(12);
             }});
             add(new Note() {{
-                setId(25);
+                setId(205);
                 setTitle("3title");
                 setDateTime(new Date(0));
                 setPriority(Priority.HIGH);
-                setImageId("priority_high");
-                setId(12);
+//                setImageId("priority_high");
             }});
         }};
         Note note = getIntent().getParcelableExtra("note");

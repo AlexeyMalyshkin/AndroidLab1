@@ -23,4 +23,23 @@
             android:id="@+id/notes_button" android:layout_below="@+id/calc_button" android:layout_centerHorizontal="true"
             android:onClick="goToNotesActivity"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DefaultTheme"
+        android:id="@+id/defaultTheme"
+        android:layout_below="@+id/notes_button"
+        android:layout_alignLeft="@+id/calc_button"
+        android:layout_alignStart="@+id/calc_button"
+        android:onClick="onThemeButtonClick" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CustomTheme"
+        android:id="@+id/CustomTheme"
+        android:onClick="onThemeButtonClick"
+        android:layout_below="@+id/defaultTheme"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

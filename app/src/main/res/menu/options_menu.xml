@@ -4,7 +4,8 @@
         android:title="@string/go"
         android:icon="@drawable/priority_high"
         android:showAsAction="collapseActionView|ifRoom"
-        android:actionViewClass="android.widget.SearchView" />
+        android:actionViewClass="android.widget.SearchView"
+        />
     <item
         android:id="@+id/menu_spinner1"
 

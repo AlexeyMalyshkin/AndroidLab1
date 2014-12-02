@@ -91,4 +91,3 @@ public class NoteAdapter extends ArrayAdapter<Note> {
         return getItem(i);
     }
 }
-

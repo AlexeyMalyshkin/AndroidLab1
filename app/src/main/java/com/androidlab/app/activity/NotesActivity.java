@@ -19,14 +19,11 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import com.androidlab.app.R;
-import com.androidlab.app.Utils.Utils;
 import com.androidlab.app.adapter.NoteAdapter;
 import com.androidlab.app.constant.Priority;
 import com.androidlab.app.db.NoteService;
 import com.androidlab.app.domain.Note;
 
-import java.sql.Date;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +36,6 @@ public class NotesActivity extends Activity implements AdapterView.OnItemClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Utils.onActivityCreateSetTheme(this);
         setContentView(R.layout.notes_layout);
         NoteService service = new NoteService(getApplicationContext());
 
@@ -60,24 +56,6 @@ public class NotesActivity extends Activity implements AdapterView.OnItemClickLi
         registerForContextMenu(notesListView);
         builder.setTitle("Sort by");
         builder.setItems(R.array.sort_options_arr, dialogListener);
-
-
-
-        // db test:
-
-            NoteService noteService = new NoteService(this);
-
-            Note note1 = new Note();
-            note1.setDateTime(new Date(0));
-            note1.setDescription("note1desc");
-            note1.setPriority(Priority.HIGH);
-            note1.setTitle("note1title");
-
-            noteService.put(note1);
-            System.out.println("test");
-
-
-
     }
 
     @Override

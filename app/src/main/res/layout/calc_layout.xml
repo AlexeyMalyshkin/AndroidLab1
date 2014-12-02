@@ -20,8 +20,8 @@
                 android:id="@+id/number8Button" android:layout_toEndOf="@+id/add_note_back_button"
                 android:layout_toRightOf="@+id/add_note_back_button" android:layout_weight="1" android:onClick="onNumberClick"/>
         <Button android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="9"
-                android:id="@+id/number9Button" android:layout_toEndOf="@+id/button2"
-                android:layout_toRightOf="@+id/button2" android:layout_weight="1" android:onClick="onNumberClick"/>
+                android:id="@+id/number9Button" android:layout_toEndOf="@+id/largeFont"
+                android:layout_toRightOf="@+id/largeFont" android:layout_weight="1" android:onClick="onNumberClick"/>
         <Button android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="/"
                 android:id="@+id/operationDivisionButton" android:layout_toEndOf="@+id/button3"
                 android:layout_below="@+id/calcResultTextView" android:layout_toRightOf="@+id/button3"

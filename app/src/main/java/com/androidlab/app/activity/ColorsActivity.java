@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.androidlab.app.R;
+import com.androidlab.app.Utils.Utils;
 import com.androidlab.app.constant.ColorsConstants;
 import com.androidlab.app.listener.SeekBarListener;
 
@@ -14,7 +15,7 @@ public class ColorsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Utils.onActivityCreateSetTheme(this);
         setContentView(R.layout.colors_layout);
 
         TextView currentColorTextView = (TextView) findViewById(R.id.currentColor);

@@ -80,9 +80,15 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 21 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+<<<<<<< HEAD
     <orderEntry type="library" exported="" name="ormlite-core-4.48" level="project" />
     <orderEntry type="library" exported="" name="ormlite-jdbc-4.48" level="project" />
     <orderEntry type="library" exported="" name="sqlite-jdbc-3.7.2" level="project" />
+=======
+    <orderEntry type="library" exported="" name="sqlite-jdbc-3.7.2" level="project" />
+    <orderEntry type="library" exported="" name="ormlite-core-4.48" level="project" />
+    <orderEntry type="library" exported="" name="ormlite-jdbc-4.48" level="project" />
+>>>>>>> a9b5c11f7413475fc0f2605e97862557cb8930db
     <orderEntry type="library" exported="" name="ormlite-android-4.45" level="project" />
   </component>
 </module>

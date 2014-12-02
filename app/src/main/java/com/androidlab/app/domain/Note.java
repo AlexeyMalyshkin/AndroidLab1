@@ -3,15 +3,24 @@ package com.androidlab.app.domain;
 import android.os.Parcel;
 import android.os.Parcelable;
 import com.androidlab.app.constant.Priority;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.Date;
 
+@DatabaseTable (tableName = "note")
 public class Note implements Parcelable{
+    @DatabaseField(generatedId = true)
     private int id;
+    @DatabaseField
     private String title;
+    @DatabaseField
     private String description;
+    @DatabaseField
     private Priority priority;
+    @DatabaseField
     private Date dateTime;
+    @DatabaseField
     private String imageId;
 
 

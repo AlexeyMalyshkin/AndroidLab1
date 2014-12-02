@@ -12,10 +12,10 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState); Utils.onActivityCreateSetTheme(this);
      //   this.setTheme(R.style.AppTheme);
         setContentView(R.layout.main_layout);
-       Utils.onActivityCreateSetTheme(this);
+    //   Utils.onActivityCreateSetTheme(this);
 //        Button colorsButton = (Button) findViewById(R.id.colors_button);
 //        Button calcButton = (Button) findViewById(R.id.calc_button);
 //        Button notesButton = (Button) findViewById(R.id.notes_button);

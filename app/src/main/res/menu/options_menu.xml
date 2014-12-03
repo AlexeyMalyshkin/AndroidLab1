@@ -9,7 +9,7 @@
     <item
         android:id="@+id/menu_spinner1"
 
-
+        android:textSize="?attr/font_medium"
         android:title="@string/hello_world"
         android:showAsAction="always"
         android:orderInCategory="1"

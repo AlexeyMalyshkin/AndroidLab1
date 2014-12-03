@@ -39,5 +39,6 @@ public class Utils
                 activity.setTheme(R.style.CustomButtonStyle);
                 break;
         }
+        activity.getTheme().applyStyle(new Preferences(activity).getFontStyle().getResId(), true);
     }
 }

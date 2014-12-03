@@ -6,6 +6,8 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -15,9 +17,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import com.androidlab.app.R;
 import com.androidlab.app.adapter.NoteAdapter;
@@ -25,9 +27,7 @@ import com.androidlab.app.constant.Priority;
 import com.androidlab.app.db.NoteService;
 import com.androidlab.app.domain.Note;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class NotesActivity extends Activity implements AdapterView.OnItemClickListener {
@@ -35,35 +35,40 @@ public class NotesActivity extends Activity implements AdapterView.OnItemClickLi
     private ListView notesListView;
     private static List<Note> noteList;
 
-    private static boolean firstRun = true;
-    private static boolean editMode = false;
-
-    private AlertDialog newBtnDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notes_layout);
+        NoteService service = new NoteService(getApplicationContext());
+
+
+        /// provide sharing:
+        final Uri CONTACT_URI = Uri
+                .parse("content://com.androidlab1.NoteProvider/notes");
+
+        Cursor cursor = getContentResolver().query(CONTACT_URI, null, null,
+                null, null);
+        startManagingCursor(cursor);
+
+        String from[] = {"title", "description" };
+        int to[] = { android.R.id.text1, android.R.id.text2 };
+        SimpleCursorAdapter adapter1 = new SimpleCursorAdapter(this,
+                android.R.layout.simple_list_item_2, cursor, from, to, 0);
+
+        System.out.println(adapter1);
+
+//        adapter1.getItem(0)
+
+//        ListView lvContact = (ListView) findViewById(R.id.lvContact);
+//        lvContact.setAdapter(adapter);
+
+
+        /// finish providing sharing
+        ///
 
         notesListView = (ListView) findViewById(R.id.notesListView);
-
-        Note note = getIntent().getParcelableExtra("note");
-
-        if(firstRun) {
-            noteList = populateList();
-            firstRun = false;
-        }
-
-        if (note != null) {
-            if (editMode) {
-                for (int i = 0; i < noteList.size(); i++) {
-                    if (noteList.get(i).getId() == note.getId()) {
-                        noteList.remove(i);
-                    }
-                }
-            }
-            noteList.add(note);
-        }
+        noteList = service.getAll();
 
         NoteAdapter adapter = new NoteAdapter(noteList, this, R.layout.note_layout);
         notesListView.setAdapter(adapter);
@@ -74,42 +79,17 @@ public class NotesActivity extends Activity implements AdapterView.OnItemClickLi
 
         builder.setTitle("Choose an Option");
         builder.setItems(R.array.new_note_arr, dialogListener);
-        newBtnDialog = builder.create();
+        AlertDialog newBtnDialog = builder.create();
 
         registerForContextMenu(notesListView);
         builder.setTitle("Sort by");
         builder.setItems(R.array.sort_options_arr, dialogListener);
-
-
-
-        // db test:
-        try {
-            NoteService noteService = new NoteService();
-
-            Note note1 = new Note();
-            note1.setDateTime(new Date(0));
-            note1.setDescription("note1desc");
-            note1.setPriority(Priority.HIGH);
-            note1.setTitle("note1title");
-
-            noteService.put(note1);
-            System.out.println("test");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
     }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        // if (v.getId() == R.id.notes_button) {
-
-//        selectedId = menuInfo.
         getMenuInflater().inflate(R.menu.contextmenu_browse, menu);
         menu.setHeaderTitle("Choose an Option");
-        //  menu.setHeaderIcon(R.drawable.ic_dialog_menu_generic);
-        // }
     }
 
     @Override
@@ -119,7 +99,6 @@ public class NotesActivity extends Activity implements AdapterView.OnItemClickLi
 
         switch (item.getItemId()) {
             case R.id.menu_edit:
-                editMode = true;
                 Note note = new Note();
                 for (int i = 0; i < noteList.size(); i++) {
                     if (noteList.get(i).getId() == id) {
@@ -129,19 +108,23 @@ public class NotesActivity extends Activity implements AdapterView.OnItemClickLi
                         intent.putExtra("note", note);
 
                         startActivity(intent);
-//                        break;
                     }
                 }
 
                 break;
 
             case R.id.menu_delete:
+                Note note2 = new Note();
                 for (int i = 0; i < noteList.size(); i++) {
                     if (noteList.get(i).getId() == id) {
-                        noteList.remove(i);
-                        break;
+                        note2 = noteList.get(i);
                     }
                 }
+
+                NoteService service = new NoteService(getApplicationContext());
+                service.delete(note2);
+
+                noteList = service.getAll();
 
                 NoteAdapter adapter = new NoteAdapter(noteList, this, R.layout.note_layout);
                 notesListView.setAdapter(adapter);
@@ -150,11 +133,12 @@ public class NotesActivity extends Activity implements AdapterView.OnItemClickLi
         }
         return true;
     }
-    private String  lastSearchQuery="";
-    private String  lastFilterQuery="";
-    private MenuItem mSpinnerItem1 = null;
 
-    private  String[] data = {"All","low", "middle", "high"};
+    private String lastSearchQuery = "";
+    private String lastFilterQuery = "";
+
+    private String[] data = {"All", "low", "middle", "high"};
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -169,10 +153,9 @@ public class NotesActivity extends Activity implements AdapterView.OnItemClickLi
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
 
-        mSpinnerItem1 = menu.findItem( R.id.menu_spinner1);
+        MenuItem mSpinnerItem1 = menu.findItem(R.id.menu_spinner1);
         View view1 = mSpinnerItem1.getActionView();
-        if (view1 instanceof Spinner)
-        {
+        if (view1 instanceof Spinner) {
             final Spinner spinner = (Spinner) view1;
 
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
@@ -185,8 +168,8 @@ public class NotesActivity extends Activity implements AdapterView.OnItemClickLi
                 public void onItemSelected(AdapterView<?> arg0, View arg1,
                                            int arg2, long arg3) {
                     lastFilterQuery = data[arg2];
-repopulateList(lastSearchQuery,data[arg2]);
-                  //  showDialog(arg2, arg3);
+                    repopulateList(lastSearchQuery, data[arg2]);
+                    //  showDialog(arg2, arg3);
                     // TODO Auto-generated method stub
 
                 }
@@ -203,57 +186,39 @@ repopulateList(lastSearchQuery,data[arg2]);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                lastSearchQuery=s;
-                repopulateList(s,lastFilterQuery);
-              //  notesListView.setAdapter(adapter);
-
-//                NoteAdapter adapter = new NoteAdapter(noteList, this, R.layout.note_layout);
-//                notesListView.setAdapter(adapter);
-//                notesListView.setOnItemClickListener(this);
+                lastSearchQuery = s;
+                repopulateList(s, lastFilterQuery);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-                lastSearchQuery=s;
+                lastSearchQuery = s;
 
-                repopulateList(s,lastFilterQuery);
+                repopulateList(s, lastFilterQuery);
                 return true;
             }
         });
         return true;
     }
 
-    private void showDialog(int arg2, long arg3) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setTitle(arg2  +" ar" + arg3);
-        builder.setItems(R.array.new_note_arr, dialogListener);
-        AlertDialog newBtnDialog1 = builder.create();
-        newBtnDialog1.show();
-    }
-
-    private void repopulateList(String s,String f) {
-        List<Note> noteList1 = noteList;
+    private void repopulateList(String s, String f) {
+        NoteService service = new NoteService(getApplicationContext());
+        List<Note> noteList1 = service.getAll();
         List<Note> noteListResult = new ArrayList<Note>();
-        for(int i=0; i<noteList1.size(); i++){
-            if(noteList1.get(i).getTitle().contains(s)){
-                switch (f)
-                {
-                    case "low":
-                    {
-                        if(noteList1.get(i).getPriority() != Priority.LOW )
-                            continue;
-
-                    }
-                    case "middle":
-                    {
-                        if(noteList1.get(i).getPriority() != Priority.MIDDLE )
+        for (int i = 0; i < noteList1.size(); i++) {
+            if (noteList1.get(i).getTitle().contains(s)) {
+                switch (f) {
+                    case "low": {
+                        if (noteList1.get(i).getPriority() != Priority.LOW)
                             continue;
                     }
-                    case "high":
-                    {
-                        if(noteList1.get(i).getPriority() != Priority.HIGH )
+                    case "middle": {
+                        if (noteList1.get(i).getPriority() != Priority.MIDDLE)
+                            continue;
+                    }
+                    case "high": {
+                        if (noteList1.get(i).getPriority() != Priority.HIGH)
                             continue;
                     }
                 }
@@ -266,110 +231,31 @@ repopulateList(lastSearchQuery,data[arg2]);
     }
 
 
-    private void setNoteAdapter(List<Note> list)
-    {
-        NoteAdapter adapter = new NoteAdapter(list,this , R.layout.note_layout);
+    private void setNoteAdapter(List<Note> list) {
+        NoteAdapter adapter = new NoteAdapter(list, this, R.layout.note_layout);
         notesListView.setAdapter(adapter);
         notesListView.setOnItemClickListener(this);
     }
+
     private DialogInterface.OnClickListener dialogListener = new DialogInterface.OnClickListener() {
         @Override
-        public void onClick(DialogInterface dialog, int which) {
-
-            System.out.println("qweeqwe");
-            Intent intent = new Intent();
-            switch (which) {
-                case 0:
-
-
-                    //  intent.setClass(BrowseActivity.this, BasicActivity.class);
-                    break;
-                case 1:
-                    //  intent.setClass(BrowseActivity.this, ChecklistActivity.class);
-                    break;
-                case 2:
-
-                    //  intent.setClass(BrowseActivity.this, SnapshotActivity.class);
-                    break;
-            }
-            startActivity(intent);
-
+        public void onClick(DialogInterface dialogInterface, int i) {
 
         }
     };
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-        openNote(id, this);
-    }
-
-    static void openNote(long id, Context ctx) {
-
-    }
-
-    public void onClick(View v) {
-        newBtnDialog.show();
-        LinearLayout checkitemLL;
-        System.out.println("qweeqwe");
-        switch (v.getId()) {
-//            case R.id.additem_btn:
-//                checkitemLL = (LinearLayout) inflater.inflate(R.layout.row_checkitem, null);
-//                EditText itemEdit = (EditText) checkitemLL.findViewById(R.id.item_et);
-//                itemEdit.setTypeface(font);
-//                checklistLL.addView(checkitemLL);
-//                break;
-//
-//            case R.id.deleteitem_btn:
-//                checkitemLL = (LinearLayout) v.getParent();
-//                TextView itemId = (TextView) checkitemLL.findViewById(R.id.item_id);
-//                if (!TextUtils.isEmpty(itemId.getText()))
-//                    new CheckItem(Long.parseLong(itemId.getText().toString())).delete(db);
-//                checklistLL.removeView(checkitemLL);
-//                break;
-        }
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_add) {
             Intent intent = new Intent(getApplicationContext(), AddNoteActivity.class);
-
             startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private List<Note> populateList() {
-        ArrayList<Note> nottes=    new ArrayList<Note>() {{
-            add(new Note() {{
-                setId(13);
-                setTitle("1title");
-                setDateTime(new Date(0));
-                setPriority(Priority.HIGH);
-//                setImageId();
-            }});
-            add(new Note() {{
-                setId(25);
-                setTitle("2title");
-                setDateTime(new Date(0));
-                setPriority(Priority.HIGH);
-//                setImageId("priority_high");
-            }});
-            add(new Note() {{
-                setId(205);
-                setTitle("3title");
-                setDateTime(new Date(0));
-                setPriority(Priority.HIGH);
-//                setImageId("priority_high");
-            }});
-        }};
-        Note note = getIntent().getParcelableExtra("note");
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-        if (note != null) {
-            nottes.add(note);
-        }
-        return nottes;
     }
 }

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.androidlab.app" >
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -22,6 +24,8 @@
         <activity android:name=".activity.NotesActivity" android:parentActivityName=".activity.MainActivity"/>
 
         <activity android:name=".activity.AddNoteActivity" android:parentActivityName=".activity.NotesActivity"/>
+
+        <provider android:authorities="com.androidlab1.NoteProvider" android:name=".db.NoteProvider" android:exported="true"/>
 
     </application>
 

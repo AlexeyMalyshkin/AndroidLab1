@@ -11,7 +11,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import com.androidlab.app.R;
+import com.androidlab.app.Utils.Utils;
 import com.androidlab.app.constant.Priority;
+import com.androidlab.app.db.NoteService;
 import com.androidlab.app.domain.Note;
 
 import java.util.Date;
@@ -22,6 +24,7 @@ public class AddNoteActivity extends Activity {
 
     private ImageView imageView;
     private Note note;
+    private static boolean editMode = false;
 
     private static final Map<String, Priority> map = new HashMap<String, Priority>(){{
         put("low", Priority.LOW);
@@ -31,7 +34,7 @@ public class AddNoteActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState); Utils.onActivityCreateSetTheme(this);
         setContentView(R.layout.add_note_layout);
         String[] data = {"low", "middle", "high"};
 
@@ -47,6 +50,7 @@ public class AddNoteActivity extends Activity {
 
         Note editNote = getIntent().getParcelableExtra("note");
         if(editNote!=null){
+            editMode = true;
             note = editNote;
 
             EditText titleEditText = (EditText) findViewById(R.id.titleAddNote);
@@ -94,8 +98,18 @@ public class AddNoteActivity extends Activity {
 
         note.setDateTime(new Date(calendarView.getDate()));
 
+        // db usage:
+
+        NoteService service = new NoteService(getApplicationContext());
+
+        if(editMode){
+            service.update(note);
+            editMode = false;
+        } else {
+            service.put(note);
+        }
+
         Intent intent = new Intent(getApplicationContext(), NotesActivity.class);
-        intent.putExtra("note", note);
 
         startActivity(intent);
     }

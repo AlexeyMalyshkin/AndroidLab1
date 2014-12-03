@@ -23,4 +23,54 @@
             android:id="@+id/notes_button" android:layout_below="@+id/calc_button" android:layout_centerHorizontal="true"
             android:onClick="goToNotesActivity"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DefaultTheme"
+        android:id="@+id/defaultTheme"
+        android:layout_below="@+id/notes_button"
+        android:layout_alignLeft="@+id/calc_button"
+        android:layout_alignStart="@+id/calc_button"
+        android:textSize="?attr/font_large"
+        android:onClick="onThemeButtonClick" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="?attr/font_large"
+        android:text="CustomTheme"
+        android:id="@+id/CustomTheme"
+        android:onClick="onThemeButtonClick"
+        android:layout_below="@+id/defaultTheme"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="smallFont"
+        android:id="@+id/smallFont"
+        android:layout_below="@+id/CustomTheme"
+        android:layout_centerHorizontal="true"
+        android:onClick="onFontSizeButtonClick" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="middleFont"
+        android:id="@+id/middleFont"
+        android:layout_below="@+id/smallFont"
+        android:layout_alignLeft="@+id/CustomTheme"
+        android:layout_alignStart="@+id/CustomTheme"
+        android:onClick="onFontSizeButtonClick" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LargeFont"
+        android:id="@+id/largeFont"
+        android:layout_below="@+id/middleFont"
+        android:layout_alignLeft="@+id/notes_button"
+        android:layout_alignStart="@+id/notes_button"
+        android:onClick="onFontSizeButtonClick" />
+
 </RelativeLayout>

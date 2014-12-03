@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.androidlab.app.R;
+import com.androidlab.app.Utils.Utils;
 import com.androidlab.app.constant.Operation;
 
 import java.util.Arrays;
@@ -23,7 +24,7 @@ public class CalcActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Utils.onActivityCreateSetTheme(this);
         setContentView(R.layout.calc_layout);
         resultTextView = (TextView) findViewById(R.id.calcResultTextView);
 

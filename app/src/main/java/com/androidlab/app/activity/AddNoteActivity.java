@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import com.androidlab.app.R;
+import com.androidlab.app.Utils.Utils;
 import com.androidlab.app.constant.Priority;
 import com.androidlab.app.db.NoteService;
 import com.androidlab.app.domain.Note;
@@ -33,7 +34,7 @@ public class AddNoteActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState); Utils.onActivityCreateSetTheme(this);
         setContentView(R.layout.add_note_layout);
         String[] data = {"low", "middle", "high"};
 

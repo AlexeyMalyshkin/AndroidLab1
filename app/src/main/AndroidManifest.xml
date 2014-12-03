@@ -25,6 +25,8 @@
 
         <activity android:name=".activity.AddNoteActivity" android:parentActivityName=".activity.NotesActivity"/>
 
+        <provider android:authorities="com.androidlab1.NoteProvider" android:name=".db.NoteProvider" android:exported="true"/>
+
     </application>
 
 </manifest>

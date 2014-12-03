@@ -6,6 +6,8 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -17,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import com.androidlab.app.R;
 import com.androidlab.app.adapter.NoteAdapter;
@@ -38,6 +41,31 @@ public class NotesActivity extends Activity implements AdapterView.OnItemClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notes_layout);
         NoteService service = new NoteService(getApplicationContext());
+
+
+        /// provide sharing:
+        final Uri CONTACT_URI = Uri
+                .parse("content://com.androidlab1.NoteProvider/notes");
+
+        Cursor cursor = getContentResolver().query(CONTACT_URI, null, null,
+                null, null);
+        startManagingCursor(cursor);
+
+        String from[] = {"title", "description" };
+        int to[] = { android.R.id.text1, android.R.id.text2 };
+        SimpleCursorAdapter adapter1 = new SimpleCursorAdapter(this,
+                android.R.layout.simple_list_item_2, cursor, from, to, 0);
+
+        System.out.println(adapter1);
+
+//        adapter1.getItem(0)
+
+//        ListView lvContact = (ListView) findViewById(R.id.lvContact);
+//        lvContact.setAdapter(adapter);
+
+
+        /// finish providing sharing
+        ///
 
         notesListView = (ListView) findViewById(R.id.notesListView);
         noteList = service.getAll();

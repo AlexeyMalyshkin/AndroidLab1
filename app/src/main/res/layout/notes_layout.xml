@@ -8,7 +8,9 @@
     <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/notesListView" android:layout_gravity="center_horizontal"
-        android:clickable="true"
-        android:longClickable="false" />
+            android:textSize="?attr/font_medium"
+            android:id="@+id/notesListView"
+            android:layout_gravity="center_horizontal"
+            android:clickable="true"
+            android:longClickable="false" />
 </LinearLayout>

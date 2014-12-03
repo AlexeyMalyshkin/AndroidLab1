@@ -12,15 +12,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/colors_button"
-            android:id="@+id/colors_button" android:layout_centerHorizontal="true"
+            android:textSize="?attr/font_medium"
+            android:id="@+id/colors_button"
+            android:layout_centerHorizontal="true"
             android:onClick="goToColorsActivity"/>
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/calc_button" android:layout_below="@+id/colors_button" android:layout_centerHorizontal="true"
-            android:text="@string/calc_button" android:onClick="goToCalcActivity"/>
-    <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/notes_button"
-            android:id="@+id/notes_button" android:layout_below="@+id/calc_button" android:layout_centerHorizontal="true"
+            android:textSize="?attr/font_medium"
+            android:id="@+id/calc_button"
+            android:layout_below="@+id/colors_button"
+            android:layout_centerHorizontal="true"
+            android:text="@string/calc_button"
+            android:onClick="goToCalcActivity"/>
+    <Button android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/notes_button"
+            android:textSize="?attr/font_medium"
+            android:id="@+id/notes_button"
+            android:layout_below="@+id/calc_button"
+            android:layout_centerHorizontal="true"
             android:onClick="goToNotesActivity"/>
 
     <Button
@@ -31,13 +42,13 @@
         android:layout_below="@+id/notes_button"
         android:layout_alignLeft="@+id/calc_button"
         android:layout_alignStart="@+id/calc_button"
-        android:textSize="?attr/font_large"
+        android:textSize="?attr/font_medium"
         android:onClick="onThemeButtonClick" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="?attr/font_large"
+        android:textSize="?attr/font_medium"
         android:text="CustomTheme"
         android:id="@+id/CustomTheme"
         android:onClick="onThemeButtonClick"
@@ -48,6 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="smallFont"
+        android:textSize="?attr/font_medium"
         android:id="@+id/smallFont"
         android:layout_below="@+id/CustomTheme"
         android:layout_centerHorizontal="true"
@@ -57,6 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="middleFont"
+        android:textSize="?attr/font_medium"
         android:id="@+id/middleFont"
         android:layout_below="@+id/smallFont"
         android:layout_alignLeft="@+id/CustomTheme"
@@ -67,6 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="LargeFont"
+        android:textSize="?attr/font_medium"
         android:id="@+id/largeFont"
         android:layout_below="@+id/middleFont"
         android:layout_alignLeft="@+id/notes_button"

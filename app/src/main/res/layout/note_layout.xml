@@ -11,18 +11,31 @@
             android:layout_height="44dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
-            android:id="@+id/noteTitle" android:layout_weight="0.91" android:layout_row="2" android:layout_column="1"/>
-    <ImageView android:layout_width="71dp" android:layout_height="71dp" android:id="@+id/priorityIgame"
-               android:layout_row="2" android:layout_column="4" android:src="@drawable/ic_launcher"/>
+            android:id="@+id/noteTitle"
+            android:layout_weight="0.91"
+            android:layout_row="2"
+            android:textSize="?attr/font_medium"
+            android:layout_column="1"/>
+    <ImageView android:layout_width="71dp"
+               android:layout_height="71dp"
+               android:id="@+id/priorityIgame"
+               android:layout_row="2"
+               android:layout_column="4"
+               android:src="@drawable/ic_launcher"/>
     <TextView
             android:layout_width="150dp"
             android:layout_height="20dp"
+            android:textSize="?attr/font_medium"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Small Text"
-            android:id="@+id/noteDate" android:layout_row="1" android:layout_column="3"/>
+            android:id="@+id/noteDate"
+            android:layout_row="1"
+            android:layout_column="3"/>
     <ImageView
             android:layout_width="72dp"
             android:layout_height="72dp"
-            android:id="@+id/galeryImage" android:layout_row="2" android:layout_column="0"
+            android:id="@+id/galeryImage"
+            android:layout_row="2"
+            android:layout_column="0"
             />
 </GridLayout>

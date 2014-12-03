@@ -1,60 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent" android:padding="@dimen/activity_horizontal_margin">
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/activity_horizontal_margin">
 
     <ImageView
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:id="@+id/imageView" android:layout_row="0" android:layout_column="0" android:onClick="imageClick"
+            android:id="@+id/imageView"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:onClick="imageClick"
             android:src="@drawable/select_image"/>
 
     <EditText
+            android:textSize="?attr/font_medium"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:id="@+id/titleAddNote" android:layout_row="0" android:layout_column="2"/>
+            android:id="@+id/titleAddNote"
+            android:layout_row="0"
+            android:layout_column="2"/>
 
     <EditText
+            android:textSize="?attr/font_medium"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:id="@+id/descriptionAddNote" android:layout_row="1" android:layout_column="2"/>
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:textAppearance="?android:attr/textAppearanceMedium" android:text="Description:"
-              android:id="@+id/textView2" android:layout_row="1" android:layout_column="1"/>
+            android:id="@+id/descriptionAddNote"
+            android:layout_row="1"
+            android:layout_column="2"/>
     <TextView
+            android:textSize="?attr/font_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Description:"
+            android:id="@+id/textView2"
+            android:layout_row="1"
+            android:layout_column="1"/>
+    <TextView
+            android:textSize="?attr/font_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Title:"
-            android:id="@+id/textView" android:layout_row="0" android:layout_column="1"/>
+            android:id="@+id/textView"
+            android:layout_row="0"
+            android:layout_column="1"/>
 
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:textAppearance="?android:attr/textAppearanceMedium" android:text="Priority:"
-              android:id="@+id/textView3" android:layout_row="2" android:layout_column="1"/>
+    <TextView
+            android:textSize="?attr/font_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Priority:"
+            android:id="@+id/textView3"
+            android:layout_row="2"
+            android:layout_column="1"/>
 
     <Spinner android:layout_height="wrap_content"
              android:layout_width="fill_parent"
              android:id="@+id/prioritySpinner"
-             android:layout_row="2" android:layout_column="2" android:spinnerMode="dropdown">
-    </Spinner>
+             android:layout_row="2"
+             android:layout_column="2"
+             android:spinnerMode="dropdown"
+             android:textSize="?attr/font_medium"/>
 
-
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:textAppearance="?android:attr/textAppearanceMedium" android:text="Date:"
-              android:id="@+id/textView4" android:layout_row="3" android:layout_column="1"/>
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textAppearance="?android:attr/textAppearanceMedium"
+              android:text="Date:"
+              android:id="@+id/textView4"
+              android:layout_row="3"
+              android:layout_column="1"
+              android:textSize="?attr/font_medium"/>
 
     <CalendarView
             android:layout_width="250dp"
             android:layout_height="150dp"
             android:id="@+id/calendarAddNote"
-            android:layout_row="3" android:layout_column="2"/>
+            android:layout_row="3"
+            android:layout_column="2"/>
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/add_note_button_text"
-            android:id="@+id/add_note_button" android:layout_row="4" android:layout_column="2"
-            android:onClick="addNote"/>
+            android:id="@+id/add_note_button"
+            android:layout_row="4"
+            android:layout_column="2"
+            android:onClick="addNote"
+            android:textSize="?attr/font_medium"/>
 
 </GridLayout>

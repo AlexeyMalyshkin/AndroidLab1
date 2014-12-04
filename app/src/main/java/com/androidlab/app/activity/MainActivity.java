@@ -38,7 +38,9 @@ private static boolean isFirstRun = true;
     public void goToColorsActivity(View view) {
         startActivity(new Intent(this, ColorsActivity.class));
     }
-
+    public void goToFragmentsActivity(View view) {
+        startActivity(new Intent(this, FragmentLayout.class));
+    }
     public void goToCalcActivity(View view) {
         startActivity(new Intent(this, CalcActivity.class));
     }

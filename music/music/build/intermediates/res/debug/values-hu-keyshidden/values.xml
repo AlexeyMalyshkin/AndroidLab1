@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- From: file:/D:/Programming/Android/music/music/src/main/res/values-hu-keyshidden/strings.xml -->
+    <eat-comment />
+
+    <string name="create_playlist_create_text_prompt" msgid="2379436619128383935">"Nyisd meg a billentyűzetet, és nevezd el az új lejátszási listát, vagy válaszd a Mentés lehetőséget a(z) \"<ns1:g id="PLAYLIST">%s</ns1:g>\" név használatához."</string>
+    <string name="rename_playlist_diff_prompt" msgid="900422624897120958">"Nyisd meg a billentyűzetet, és adj új nevet a(z) \"<ns1:g id="PLAYLIST">%1$s</ns1:g>\" lejátszási listának, vagy válaszd a Mentés lehetőséget a(z) \"<ns1:g id="NAME">%2$s</ns1:g>\" név használatához."</string>
+    <string name="rename_playlist_same_prompt" msgid="7777541452078260899">"Nyisd meg a billentyűzetet, és adj új nevet a(z) \"<ns1:g id="PLAYLIST">%s</ns1:g>\" lejátszási listának."</string>
+
+</resources>

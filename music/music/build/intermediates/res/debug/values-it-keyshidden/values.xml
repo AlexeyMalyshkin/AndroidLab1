@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- From: file:/D:/Programming/Android/music/music/src/main/res/values-it-keyshidden/strings.xml -->
+    <eat-comment />
+
+    <string name="create_playlist_create_text_prompt" msgid="2379436619128383935">"Apri la tastiera per assegnare un nome alla nuova playlist o seleziona Salva per denominarla \"<ns1:g id="PLAYLIST">%s</ns1:g>\"."</string>
+    <string name="rename_playlist_diff_prompt" msgid="900422624897120958">"Apri la tastiera per assegnare un nuovo nome alla playlist \"<ns1:g id="PLAYLIST">%1$s</ns1:g>\" o seleziona Salva per denominarla \"<ns1:g id="NAME">%2$s</ns1:g>\"."</string>
+    <string name="rename_playlist_same_prompt" msgid="7777541452078260899">"Apri la tastiera per assegnare un nuovo nome alla playlist \"<ns1:g id="PLAYLIST">%s</ns1:g>\"."</string>
+
+</resources>

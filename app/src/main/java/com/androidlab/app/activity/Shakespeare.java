@@ -19,6 +19,7 @@ public final class Shakespeare {
     /**
      * Our data, part 2.
      */
+
     public static final String[] DIALOGUE =
             {
                     "So shaken as we are, so wan with care," +

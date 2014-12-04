@@ -39,7 +39,7 @@ private static boolean isFirstRun = true;
         startActivity(new Intent(this, ColorsActivity.class));
     }
     public void goToFragmentsActivity(View view) {
-        startActivity(new Intent(this, FragmentLayout.class));
+        startActivity(new Intent(this, NotesFragment.class));
     }
     public void goToCalcActivity(View view) {
         startActivity(new Intent(this, CalcActivity.class));

@@ -87,4 +87,14 @@
         android:layout_alignStart="@+id/notes_button"
         android:onClick="onFontSizeButtonClick" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/button"
+        android:layout_below="@+id/calc_button"
+        android:layout_toRightOf="@+id/notes_button"
+        android:layout_toEndOf="@+id/notes_button"
+        android:onClick="goToFragmentsActivity" />
+
 </RelativeLayout>

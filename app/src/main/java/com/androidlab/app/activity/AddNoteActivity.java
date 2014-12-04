@@ -26,7 +26,7 @@ public class AddNoteActivity extends Activity {
     private Note note;
     private static boolean editMode = false;
 
-    private static final Map<String, Priority> map = new HashMap<String, Priority>(){{
+    private static final Map<String, Priority> map = new HashMap<String, Priority>() {{
         put("low", Priority.LOW);
         put("middle", Priority.MIDDLE);
         put("high", Priority.HIGH);
@@ -34,7 +34,8 @@ public class AddNoteActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState); Utils.onActivityCreateSetTheme(this);
+        super.onCreate(savedInstanceState);
+        Utils.onActivityCreateSetTheme(this);
         setContentView(R.layout.add_note_layout);
         String[] data = {"low", "middle", "high"};
 
@@ -49,7 +50,7 @@ public class AddNoteActivity extends Activity {
         // ON EDIT:
 
         Note editNote = getIntent().getParcelableExtra("note");
-        if(editNote!=null){
+        if (editNote != null) {
             editMode = true;
             note = editNote;
 
@@ -59,33 +60,33 @@ public class AddNoteActivity extends Activity {
             EditText descriptionEditText = (EditText) findViewById(R.id.descriptionAddNote);
             descriptionEditText.setText(note.getDescription());
 
-            if(note.getImageId()!=null) {
-                if(!note.getImageId().isEmpty()) {
+            if (note.getImageId() != null) {
+                if (!note.getImageId().isEmpty()) {
                     imageView.setImageURI(Uri.parse(note.getImageId()));
                 }
             }
 
-            spinner.setSelection(1,true);
+            spinner.setSelection(1, true);
 
             CalendarView calendarView = (CalendarView) findViewById(R.id.calendarAddNote);
             calendarView.setDate(note.getDateTime().getTime());
         }
     }
 
-    public void imageClick(View view){
+    public void imageClick(View view) {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), 0);
     }
 
-    public void addNote(View view){
+    public void addNote(View view) {
         EditText titleEditText = (EditText) findViewById(R.id.titleAddNote);
         EditText descriptionEditText = (EditText) findViewById(R.id.descriptionAddNote);
         Spinner spinner = (Spinner) findViewById(R.id.prioritySpinner);
         CalendarView calendarView = (CalendarView) findViewById(R.id.calendarAddNote);
 
-        if(note == null){
+        if (note == null) {
             note = new Note();
         }
 
@@ -96,13 +97,13 @@ public class AddNoteActivity extends Activity {
         String selectedSpinnerItem = (String) spinner.getSelectedItem();
         note.setPriority(map.get(selectedSpinnerItem));
 
-        note.setDateTime(new Date(calendarView.getDate()));
-
+//        note.setDateTime(new Date(calendarView.getDate()));
+        note.setDateTime(new Date());
         // db usage:
 
         NoteService service = new NoteService(getApplicationContext());
 
-        if(editMode){
+        if (editMode) {
             service.update(note);
             editMode = false;
         } else {
@@ -116,7 +117,7 @@ public class AddNoteActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(data!=null) {
+        if (data != null) {
             Uri imageUri = data.getData();
             if (imageUri != null) {
                 imageView.setImageURI(imageUri);

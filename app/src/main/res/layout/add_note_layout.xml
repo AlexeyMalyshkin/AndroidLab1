@@ -76,10 +76,16 @@
               android:layout_column="1"
               android:textSize="?attr/font_medium"/>
 
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:textAppearance="?android:attr/textAppearanceMedium" android:text="Date:"
+              android:id="@+id/textView4" android:layout_row="3" android:layout_column="1"
+              android:visibility="invisible"/>
+
     <CalendarView
             android:layout_width="250dp"
             android:layout_height="150dp"
             android:id="@+id/calendarAddNote"
+            android:layout_row="3" android:layout_column="2" android:visibility="invisible"/>
             android:layout_row="3"
             android:layout_column="2"/>
     <Button
